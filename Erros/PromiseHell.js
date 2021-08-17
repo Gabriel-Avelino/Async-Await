@@ -1,8 +1,9 @@
-//Porém, mesmo com a criação das promises, pode ocorrer um PromiseHell (problema parecido com o HellFunction), que é o uso inadequado das promises.
+//Porém, mesmo com a criação das promises, pode ocorrer um PromiseHell ou CallbackHell (problema parecido com o HellFunction), que é o uso inadequado das promises.
 //Obs: isso é apenas uma demonstração de escrita, não há arquivos para a execução dos comandos
-const {promisify}= require("util")
-const basePath = './assets'
-
+const fs = require('fs');
+const path = require ('path');
+const basePath = './assets';
+const {promisify} = require('util')  
 const readFileAsync = promisify(fs.readFile)
 
 console.log('Begin')
@@ -17,7 +18,7 @@ readFileAsync(path.resolve(basePath, 's1.txt'),{ encoding: "utf-8" })
                 console.log(sentence,'\n')
                 return readFileAsync(path.resolve(basePath, 's4.txt'),{ encoding: "utf-8" })
                 .then(console.log)
-                .finaly(()=> console.log('End'))
+                .finally(()=> console.log('End'))
             })
         })
     })
@@ -25,9 +26,10 @@ readFileAsync(path.resolve(basePath, 's1.txt'),{ encoding: "utf-8" })
 
 
 //Para resolver, basta encadear as funções fora das chaves da função then.
-const {promisify}= require("util")
-const basePath = './assets'
-
+const fs = require('fs');
+const path = require ('path');
+const basePath = './assets';
+const { promisify } = require('util')  
 const readFileAsync = promisify(fs.readFile)
 
 console.log('Begin')
@@ -45,24 +47,24 @@ readFileAsync(path.resolve(basePath, 's1.txt'),{ encoding: "utf-8" })
         return readFileAsync(path.resolve(basePath, 's4.txt'),{ encoding: "utf-8" })
     })
     .then(console.log)
-    .finaly(()=> console.log('End'))
-
+    .finally(() => console.log('End'))
+    
 
 
 //Outra resolução é com async/await:
 (async function(){
     try{
-        const sentence1= await readFileAsync(path.resolve(basePath, 's1.txt'),{ encoding: "utf-8" });
-    console.log(sentence1,'\n')
+    const sentence1 = await readFileAsync(path.resolve(basePath, 's1.txt'),{ encoding: "utf-8" })
+    console.log(sentence1, '\n')
 
     const sentence2 = await readFileAsync(path.resolve(basePath, 's2.txt'),{ encoding: "utf-8" })
-    console.log(sentence2,'\n')
+    console.log(sentence2, '\n')
 
     const sentence3 = await readFileAsync(path.resolve(basePath, 's3.txt'),{ encoding: "utf-8" })
-    console.log(sentence3,'\n')
+    console.log(sentence3, '\n')
 
     const sentence4 = await readFileAsync(path.resolve(basePath, 's4.txt'),{ encoding: "utf-8" })
-    console.log(sentence4)
+    console.log(sentence4, '\n')
     }catch(err){
         console.error(err)
     }//o bloco try/catch é usado para substituir o finally, sem esse bloco, um erro em uma das promises não permitirá a execuçaõ do último console.log
