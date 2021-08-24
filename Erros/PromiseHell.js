@@ -32,6 +32,7 @@ const basePath = './assets';
 const { promisify } = require('util')  
 const readFileAsync = promisify(fs.readFile)
 
+
 console.log('Begin')
 readFileAsync(path.resolve(basePath, 's1.txt'),{ encoding: "utf-8" })
     .then((sentence)=>{
@@ -50,7 +51,7 @@ readFileAsync(path.resolve(basePath, 's1.txt'),{ encoding: "utf-8" })
     .finally(() => console.log('End'))
     
 
-
+/*
 //Outra resolução é com async/await:
 (async function(){
     try{
@@ -70,3 +71,4 @@ readFileAsync(path.resolve(basePath, 's1.txt'),{ encoding: "utf-8" })
     }//o bloco try/catch é usado para substituir o finally, sem esse bloco, um erro em uma das promises não permitirá a execuçaõ do último console.log
     console.log('End')
 })()
+*/
